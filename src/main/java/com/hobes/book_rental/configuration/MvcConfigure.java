@@ -52,10 +52,7 @@ public class MvcConfigure implements WebMvcConfigurer{
 		ReloadableResourceBundleMessageSource source = new ReloadableResourceBundleMessageSource();
 		
 		String[] baseNames = {
-			"classpath:message-src/Author/author",
-			"classpath:message-src/Category/category",
-			"classpath:message-src/Member/member",
-			"classpath:message-src/Book/book"
+			"classpath:message-src/validation/error-alert"
 		};
 		
 		source.setBasenames(baseNames);

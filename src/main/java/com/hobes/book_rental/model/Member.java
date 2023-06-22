@@ -6,17 +6,19 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Email;
+import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "tbl_member")
-@Getter @Setter
+@Table(name = "tbl_member", uniqueConstraints = {
+		@UniqueConstraint(columnNames = "email", name = "UNIQUE_tbl_member_email"),
+		@UniqueConstraint(columnNames = "mobile_number", name = "UNIQUE_tbl_member_mobile_number")})
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Member {
@@ -24,17 +26,14 @@ public class Member {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@Email(message = "{member.email}")
+
 	private String email;
-	
-	@NotEmpty(message = "{member.name}")
+
 	private String name;
-	
-	@Column(name = "mobile_no")
-	@Pattern(regexp = "^9\\d{9}$" ,message = "{member.mobileNumber}")
+
+	@Column(name = "mobile_number")
 	private String mobileNumber;
-	
-	@NotEmpty(message="{member.address}")
+
+	@NotEmpty(message = "{member.address}")
 	private String address;
 }
