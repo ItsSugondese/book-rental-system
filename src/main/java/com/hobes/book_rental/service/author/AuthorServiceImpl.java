@@ -32,7 +32,7 @@ public class AuthorServiceImpl implements AuthorService {
 
 	@Override
 	public AuthorResponse getSingleAuthor(Long id) {
-		AuthorResponse authorResponse = modelMapper.map((authorRepo.getReferenceById(id)).get(), AuthorResponse.class);
+		AuthorResponse authorResponse = modelMapper.map((authorRepo.findById(id)).get(), AuthorResponse.class);
 		return authorResponse;
 	}
 
@@ -41,7 +41,7 @@ public class AuthorServiceImpl implements AuthorService {
 		Author author;
 
 		if (authorRequest.getId() != null)
-			author = authorRepo.getReferenceById(authorRequest.getId()).orElse(new Author());
+			author = authorRepo.findById(authorRequest.getId()).orElse(new Author());
 
 		author = modelMapper.map(authorRequest, Author.class);
 
@@ -52,6 +52,6 @@ public class AuthorServiceImpl implements AuthorService {
 
 	@Override
 	public void removeAuthor(Long id) {
-		authorRepo.delete(authorRepo.getReferenceById(id).get());
+		authorRepo.delete(authorRepo.findById(id).get());
 	}
 }

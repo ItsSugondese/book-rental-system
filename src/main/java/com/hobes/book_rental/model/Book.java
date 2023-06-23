@@ -41,9 +41,9 @@ public class Book {
 	@Column(columnDefinition = "VARCHAR(100)")
 	private String name;
 
-	private int noOfPages;
+	private Integer noOfPages;
 
-	@Column(columnDefinition = "VARCHAR(30)", unique = true)
+	@Column(columnDefinition = "VARCHAR(30)")
 	private Integer isbn;
 
 	@Value("0.0")

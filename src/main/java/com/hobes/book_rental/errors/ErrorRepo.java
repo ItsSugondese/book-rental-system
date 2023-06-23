@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.hobes.book_rental.exception.AlreadyExistsException;
+import com.hobes.book_rental.exception.DoesNotExistException;
 import com.hobes.book_rental.helper.ResponseHandler;
 
 @RestControllerAdvice
@@ -44,12 +45,27 @@ public class ErrorRepo {
 		return ResponseHandler.generateErrorResponse("Value " + insertedValue + " already exisits", HttpStatus.CONFLICT);
 	}
 	
+	
+	
+	
+	
 	// when user pass the value or key that doesn't exist in database
 	@ExceptionHandler(NoSuchElementException.class)
 	public ResponseEntity<Object> noValue(NoSuchElementException ex) {
 		 
 		return ResponseHandler.generateErrorResponse("No data exists with that primary key", HttpStatus.NOT_FOUND);
 	}
+	
+	
+	// when user passes the fk value that doesn't exist in parent table
+	@ExceptionHandler(DoesNotExistException.class)
+	public ResponseEntity<Object> noValue(DoesNotExistException ex) {
+		return ResponseHandler.generateErrorResponse(ex.getMessage(), HttpStatus.NOT_FOUND);
+	}
+	
+	
+	
+	
 	
 	//when user send bad request
 	@ExceptionHandler(HttpMessageNotReadableException.class)
@@ -62,6 +78,11 @@ public class ErrorRepo {
 		}
 		return ResponseHandler.generateErrorResponse(ex.getMessage(), HttpStatus.BAD_REQUEST);
 	}
+	
+	
+	
+	
+	
 	
 	// when user leave out compulsory field when providing data
 	@ExceptionHandler(MethodArgumentNotValidException.class)

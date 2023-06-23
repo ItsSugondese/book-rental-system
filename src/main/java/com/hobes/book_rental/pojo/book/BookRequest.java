@@ -1,15 +1,23 @@
 package com.hobes.book_rental.pojo.book;
 
 import java.util.Date;
+import java.util.List;
 
 import org.hibernate.validator.constraints.UniqueElements;
 
-import com.hobes.book_rental.model.Category;
-
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-@Data
+@Getter @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class BookRequest {
 
 	private Long id;
@@ -17,25 +25,25 @@ public class BookRequest {
 	@NotEmpty(message = "{book.name}")
 	private String name;
 	
-	@NotEmpty(message = "{book.noOfPages}")
-	private int noOfPages;
+	@NotNull(message = "{book.noOfPages}")
+	private Integer noOfPages;
 	
-	@NotEmpty(message = "{book.isbn}")
-	@UniqueElements
+	@NotNull(message = "{book.isbn}")
 	private Integer isbn;
 	
-	@NotEmpty(message = "{book.stockCount}")
+	@NotNull(message = "{book.stockCount}")
 	private Integer stockCount;
 	
-	@NotEmpty(message = "{book.publishedDate}")
+	@NotNull(message = "{book.publishedDate}")
 	private Date publishedDate;
 	
 	
 	@NotEmpty(message = "{book.photo}")
 	private String photo;
 	
-	@NotEmpty(message = "{book.category}")
+	@NotNull(message = "{book.category}")
 	private Long categoryId;
 	
-	private Long authorId;
+	@NotEmpty(message = "{book.authorId}")
+	private List<Long> authorId;
 }

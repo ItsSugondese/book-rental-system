@@ -43,9 +43,4 @@ public class Author {
 	@Column(name = "mobile_number")
 	private String mobileNumber;
 
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "tbl_book_author", joinColumns = {
-			@JoinColumn(name = "book_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_tbl_book_author_tbl_book")) }, inverseJoinColumns = {
-					@JoinColumn(name = "author_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_tbl_book_author_tbl_author")) })
-	private List<Book> books;
 }

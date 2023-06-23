@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hobes.book_rental.exception.AlreadyExistsException;
+import com.hobes.book_rental.exception.DoesNotExistException;
 import com.hobes.book_rental.helper.ResponseHandler;
 import com.hobes.book_rental.pojo.book.BookRequest;
 import com.hobes.book_rental.pojo.book.BookResponse;
@@ -33,7 +34,7 @@ public class BookController {
 
 	@PostMapping
 	public ResponseEntity<Object> addUpdateBook(@Valid @RequestBody BookRequest bookRequest)
-			throws AlreadyExistsException {
+			throws DoesNotExistException {
 		BookResponse bookResponse = bookService.addBook(bookRequest);
 
 		if (bookResponse == null) {

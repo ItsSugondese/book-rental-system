@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.hobes.book_rental.model.Author;
 
-public interface AuthorRepo extends JpaRepository<Author, Integer>{
+public interface AuthorRepo extends JpaRepository<Author, Long>{
 
-	Optional<Author> getReferenceById(Long id);
+	Optional<Author> findById(Long id);
 }

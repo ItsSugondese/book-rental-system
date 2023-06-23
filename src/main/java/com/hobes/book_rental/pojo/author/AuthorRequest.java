@@ -29,6 +29,4 @@ public class AuthorRequest {
 	
 	@Pattern(regexp = "^9\\d{9}$" ,message = "{author.mobileNumber}")
 	private String mobileNumber;
-	
-	private Long bookId;
 }

@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.hobes.book_rental.model.Category;
 import com.hobes.book_rental.pojo.author.AuthorResponse;
+import com.hobes.book_rental.pojo.category.CategoryResponse;
 
 import lombok.Data;
 
@@ -32,7 +33,7 @@ public class BookResponse {
 	private String photo;
 	
 	
-	private Category categoryId;
+	private CategoryResponse category;
 	
 	private List<AuthorResponse> authors;
 }

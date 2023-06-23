@@ -25,7 +25,4 @@ public class AuthorResponse {
 	
 	
 	private String mobileNumber;
-	
-
-	private List<BookResponse> books;
 }
