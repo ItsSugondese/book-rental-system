@@ -49,7 +49,6 @@ public class BookTransactionServiceImpl implements BookTransactionService {
 
 	@Override
 	public List<BookTransactionResponse> getAllBookTransactions() {
-		System.out.println(bookTransactionRepo.getLastPrimaryKey());
 		List<BookTransactionResponse> bookTransactionResponses = (bookTransactionRepo.findAll()).stream()
 				.map(e -> modelMapper.map(e, BookTransactionResponse.class)).collect(Collectors.toList());
 
@@ -195,7 +194,7 @@ public class BookTransactionServiceImpl implements BookTransactionService {
 
 	@Override
 	public void removeBookTransaction(Long id) {
-		// TODO Auto-generated method stub
+		bookTransactionRepo.delete(bookTransactionRepo.findById(id).get());
 
 	}
 

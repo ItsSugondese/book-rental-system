@@ -21,7 +21,7 @@ public class BookTransactionResponse {
 
 	private BookResponse book;
 
-	private Integer code;
+	private String code;
 
 	private LocalDate fromDate;
 
