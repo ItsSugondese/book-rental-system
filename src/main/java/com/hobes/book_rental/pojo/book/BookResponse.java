@@ -1,5 +1,6 @@
 package com.hobes.book_rental.pojo.book;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class BookResponse {
 	private Integer stockCount;
 	
 	
-	private Date publishedDate;
+	private LocalDate publishedDate;
 	
 	private String photo;
 	

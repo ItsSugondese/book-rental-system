@@ -1,8 +1,5 @@
 package com.hobes.book_rental.pojo.member;
 
-import org.hibernate.validator.constraints.UniqueElements;
-
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
@@ -14,7 +11,6 @@ public class MemberRequest {
 	private Long id;
 	
 	@Email(message = "{member.email}")
-	@UniqueElements(message = "")
 	private String email;
 	
 	@NotEmpty(message = "{member.name}")

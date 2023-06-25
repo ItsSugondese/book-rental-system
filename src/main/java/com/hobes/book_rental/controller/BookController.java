@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hobes.book_rental.exception.AlreadyExistsException;
+import com.hobes.book_rental.exception.BookStockException;
 import com.hobes.book_rental.exception.DoesNotExistException;
 import com.hobes.book_rental.helper.ResponseHandler;
 import com.hobes.book_rental.pojo.book.BookRequest;
@@ -38,7 +38,7 @@ public class BookController {
 		BookResponse bookResponse = bookService.addBook(bookRequest);
 
 		if (bookResponse == null) {
-			return ResponseHandler.generateErrorResponse("Category already exists", HttpStatus.CONFLICT);
+			return ResponseHandler.generateErrorResponse("Book already exists", HttpStatus.CONFLICT);
 		}
 		return ResponseHandler.generateResponse("Book Successfully added", HttpStatus.CREATED, bookResponse);
 	}

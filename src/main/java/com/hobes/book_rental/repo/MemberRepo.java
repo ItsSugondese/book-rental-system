@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.hobes.book_rental.model.Member;
 
 
-public interface MemberRepo extends JpaRepository<Member, Integer>{
+public interface MemberRepo extends JpaRepository<Member, Long>{
 
-	Optional<Member> getReferenceById(Long id);
+	Optional<Member> findById(Long id);
 }

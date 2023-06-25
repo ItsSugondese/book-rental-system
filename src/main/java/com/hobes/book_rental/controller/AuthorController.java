@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hobes.book_rental.exception.AlreadyExistsException;
+import com.hobes.book_rental.exception.BookStockException;
 import com.hobes.book_rental.helper.ResponseHandler;
 import com.hobes.book_rental.pojo.author.AuthorRequest;
 import com.hobes.book_rental.pojo.author.AuthorResponse;
@@ -32,7 +32,7 @@ public class AuthorController {
 
 	@PostMapping
 	public ResponseEntity<Object> addUpdateAuthor(@Valid @RequestBody AuthorRequest authorRequest)
-			throws AlreadyExistsException {
+			throws BookStockException {
 		AuthorResponse authorResponse = authorService.addAuthor(authorRequest);
 
 		if (authorResponse == null) {

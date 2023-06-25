@@ -45,7 +45,7 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public BookResponse getSingleBook(Long id) {
-		BookResponse bookResponse = modelMapper.map((bookRepo.getReferenceById(id)).get(), BookResponse.class);
+		BookResponse bookResponse = modelMapper.map((bookRepo.findById(id)).get(), BookResponse.class);
 		return bookResponse;
 	}
 
@@ -56,24 +56,23 @@ public class BookServiceImpl implements BookService {
 		List<Author> authors;
 
 		if (bookRequest.getId() != null)
-			book = bookRepo.getReferenceById(bookRequest.getId()).orElse(new Book());
+			book = bookRepo.findById(bookRequest.getId()).orElse(new Book());
 
 		try {
-			category = categoryRepo.getReferenceById(bookRequest.getCategoryId()).get();
+			category = categoryRepo.findById(bookRequest.getCategoryId()).get();
 		} catch (NoSuchElementException e) {
 			throw new DoesNotExistException((bookRequest.getCategoryId()).toString(), "categoryId");
 		}
 
-		authors = authorRepo.findAllById(bookRequest.getAuthorId());
-
-		List<Long> notFound = (bookRequest.getAuthorId()).stream().filter(e -> !authorRepo.existsById(e))
+		authors = bookRequest.getAuthorId().stream().map(aLong -> authorRepo.findById(aLong)
+				.orElseThrow(() -> new DoesNotExistException(aLong.toString(), "AuthorId")))
 				.collect(Collectors.toList());
-		if (authors.size() != bookRequest.getAuthorId().size()) {
-			throw new DoesNotExistException((notFound).toString(), "authorId");
-		}
+		
 
 		book = modelMapper.map(bookRequest, Book.class);
 
+		book.setRating(0.0);
+		
 		book.setCategoryId(category);
 		book.setAuthors(authors);
 
@@ -90,7 +89,7 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public void removeBook(Long id) {
-		bookRepo.delete(bookRepo.getReferenceById(id).get());
+		bookRepo.delete(bookRepo.findById(id).get());
 
 	}
 

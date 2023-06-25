@@ -1,8 +1,9 @@
 package com.hobes.book_rental.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.beans.factory.annotation.Value;
 
 import jakarta.persistence.Column;
@@ -47,11 +48,13 @@ public class Book {
 	private Integer isbn;
 
 	@Value("0.0")
+	@ColumnDefault("0.0")
+	@Column(columnDefinition = "double default 0.0")
 	private Double rating;
 
 	private Integer stockCount;
 
-	private Date publishedDate;
+	private LocalDate publishedDate;
 
 	@Column(columnDefinition = "VARCHAR(200)")
 	private String photo;

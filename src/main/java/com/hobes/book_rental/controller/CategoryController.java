@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hobes.book_rental.exception.AlreadyExistsException;
+import com.hobes.book_rental.exception.BookStockException;
 import com.hobes.book_rental.helper.ResponseHandler;
 import com.hobes.book_rental.pojo.category.CategoryRequest;
 import com.hobes.book_rental.pojo.category.CategoryResponse;
@@ -32,7 +32,7 @@ public class CategoryController {
 
 	@PostMapping
 	public ResponseEntity<Object> addUpdateCategory(@Valid @RequestBody CategoryRequest categoryRequest)
-			throws AlreadyExistsException {
+			throws BookStockException {
 		CategoryResponse categoryResponse = categoryService.addCategory(categoryRequest);
 
 		if (categoryResponse == null) {

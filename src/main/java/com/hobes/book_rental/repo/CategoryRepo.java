@@ -6,8 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.hobes.book_rental.model.Category;
 
-public interface CategoryRepo extends JpaRepository<Category, Integer>{
+public interface CategoryRepo extends JpaRepository<Category, Long>{
 
-	Optional<Category> getReferenceById(Long id);
+	Optional<Category> findById(Long id);
 	
 }

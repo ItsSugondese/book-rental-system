@@ -32,7 +32,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public MemberResponse getSingleMember(Long id) {
-		MemberResponse memberResponse = modelMapper.map((memberRepo.getReferenceById(id)).get(), MemberResponse.class);
+		MemberResponse memberResponse = modelMapper.map((memberRepo.findById(id)).get(), MemberResponse.class);
 		return memberResponse;
 	}
 
@@ -42,7 +42,7 @@ public class MemberServiceImpl implements MemberService {
 		Member member;
 
 		if (memberRequest.getId() != null)
-			member = memberRepo.getReferenceById(memberRequest.getId()).orElse(new Member());
+			member = memberRepo.findById(memberRequest.getId()).orElse(new Member());
 
 		member = modelMapper.map(memberRequest, Member.class);
 		
@@ -53,7 +53,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public void removeMember(Long id) {
-		memberRepo.delete(memberRepo.getReferenceById(id).get());
+		memberRepo.delete(memberRepo.findById(id).get());
 
 	}
 

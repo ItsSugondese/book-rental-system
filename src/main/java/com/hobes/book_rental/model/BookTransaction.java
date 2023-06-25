@@ -1,5 +1,6 @@
 package com.hobes.book_rental.model;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
@@ -44,16 +45,17 @@ public class BookTransaction {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Book bookId;
 
-	@UuidGenerator
-	private UUID code;
+
+	private String code;
 
 	@Column(name = "from_date")
-	private Date fromDate;
+	private LocalDate fromDate;
 
 	@Column(name = "to_date")
-	private Date toDate;
+	private LocalDate toDate;
 
 	@Column(name = "rent_status")
+	@Enumerated(EnumType.STRING)
 	private RentType rentStatus;
 
 	@JoinColumn(name = "member_id", 

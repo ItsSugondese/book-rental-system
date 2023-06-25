@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hobes.book_rental.exception.AlreadyExistsException;
+import com.hobes.book_rental.exception.BookStockException;
 import com.hobes.book_rental.helper.ResponseHandler;
 import com.hobes.book_rental.pojo.book.BookRequest;
 import com.hobes.book_rental.pojo.book.BookResponse;
@@ -34,7 +34,7 @@ public class MemberController {
 
 	@PostMapping
 	public ResponseEntity<Object> addUpdateMember(@Valid @RequestBody MemberRequest memberRequest)
-			throws AlreadyExistsException {
+			throws BookStockException {
 		MemberResponse memberResponse = memberService.addMember(memberRequest);
 
 		if (memberResponse == null) {

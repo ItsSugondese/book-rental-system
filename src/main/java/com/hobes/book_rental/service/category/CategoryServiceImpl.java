@@ -27,7 +27,7 @@ public class CategoryServiceImpl implements CategoryService {
 		Category category;
 
 		if (categoryRequest.getId() != null)
-			category = categoryRepo.getReferenceById(categoryRequest.getId()).orElse(new Category());
+			category = categoryRepo.findById(categoryRequest.getId()).orElse(new Category());
 
 //		category = dtoToModel(categoryRequest);
 
@@ -68,13 +68,13 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Override
 	public CategoryResponse getSingleCategory(Long id) {
-		CategoryResponse categoryResponse = modelMapper.map((categoryRepo.getReferenceById(id)).get(), CategoryResponse.class);
+		CategoryResponse categoryResponse = modelMapper.map((categoryRepo.findById(id)).get(), CategoryResponse.class);
 		return categoryResponse;
 	}
 
 	@Override
 	public void removeCategory(Long id) {
-		categoryRepo.delete(categoryRepo.getReferenceById(id).get());
+		categoryRepo.delete(categoryRepo.findById(id).get());
 	}
 
 }

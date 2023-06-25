@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class DoesNotExistException extends Exception {
+public class DoesNotExistException extends RuntimeException {
 
 	/**
 	 * 
