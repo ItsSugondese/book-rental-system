@@ -24,7 +24,7 @@ public class BookRentalApplication implements CommandLineRunner {
 	private PasswordEncoder passwordEncoder;
 	
 	
-	String adminEmail = "admin@admin.com";
+	String adminEmail = "rohanniroula5528@gmail.com";
 	public BookRentalApplication(RoleRepo roleRepo, MemberRepo memberRepo, LoginDetailsRepo loginDetailsRepo,PasswordEncoder passwordEncoder) {
 		this.roleRepo = roleRepo;
 		this.memberRepo = memberRepo;
@@ -40,9 +40,9 @@ public class BookRentalApplication implements CommandLineRunner {
 
 		if(loginDetailsRepo.findMemberByEmail(adminEmail) == null) {
 		Member member = new Member();
-		member.setEmail("admin@admin.com");
+		member.setEmail(adminEmail);
 		member.setAddress("Hobes");
-		member.setMobileNumber("9868389356");
+		member.setMobileNumber("9862389356");
 		member.setName("Admin");
 		
 
