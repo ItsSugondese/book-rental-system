@@ -1,5 +1,6 @@
 package com.hobes.book_rental.repo;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -33,5 +34,8 @@ public interface BookTransactionRepo extends JpaRepository<BookTransaction, Long
 	
 	@Query("SELECT b FROM BookTransaction b WHERE b.id= ?1 OR b.code=?2")
 	BookTransaction findByIdOrCode(Long id, String code);
+	
+	@Query("SELECT b FROM BookTransaction b WHERE b.memberId= ?1")
+	List<BookTransaction> findAllTransactionOfMember(Member memberId);
 }
 

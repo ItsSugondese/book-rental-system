@@ -2,7 +2,6 @@ package com.hobes.book_rental.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hobes.book_rental.helper.ResponseHandler;
-import com.hobes.book_rental.pojo.book.BookResponse;
 import com.hobes.book_rental.pojo.book_transaction.BookTransactionResponse;
 import com.hobes.book_rental.pojo.book_transaction.book_rent.BookRentRequest;
 import com.hobes.book_rental.pojo.book_transaction.book_rent.BookRentResponse;
@@ -44,6 +42,17 @@ public class BookTransactionController {
 	@GetMapping("/{id}")
 	public ResponseEntity<Object> getSignleTransaction(@PathVariable("id") Long id) {
 		BookTransactionResponse bookTransactionResponse = bookTransactionService.getSingleBookTransaction(id);
+		return ResponseHandler.generateResponse("Successfully retrieved data", HttpStatus.OK, bookTransactionResponse);
+	}
+	
+	@GetMapping("/member/{id}")
+	public ResponseEntity<Object> getMemberTransactionHistory(@PathVariable("id") Long id) {
+		List<BookTransactionResponse> bookTransactionResponse = bookTransactionService.getTransactionHistoryOfMember(id);
+		
+		
+		
+		if(bookTransactionResponse.size() <1)
+			return ResponseHandler.generateErrorResponse("Member you are searching for haven't made any transaction yet", HttpStatus.NOT_FOUND);
 		return ResponseHandler.generateResponse("Successfully retrieved data", HttpStatus.OK, bookTransactionResponse);
 	}
 	

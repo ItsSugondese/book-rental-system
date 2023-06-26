@@ -8,23 +8,19 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import com.hobes.book_rental.enums.RentType;
-import com.hobes.book_rental.exception.BookStockException;
 import com.hobes.book_rental.exception.BookReturnTransactionException;
+import com.hobes.book_rental.exception.BookStockException;
 import com.hobes.book_rental.exception.DoesNotExistException;
-import com.hobes.book_rental.model.Author;
 import com.hobes.book_rental.model.Book;
 import com.hobes.book_rental.model.BookTransaction;
-import com.hobes.book_rental.model.Category;
 import com.hobes.book_rental.model.Member;
 import com.hobes.book_rental.pojo.author.AuthorResponse;
-import com.hobes.book_rental.pojo.book.BookRequest;
 import com.hobes.book_rental.pojo.book.BookResponse;
 import com.hobes.book_rental.pojo.book_transaction.BookTransactionResponse;
 import com.hobes.book_rental.pojo.book_transaction.book_rent.BookRentRequest;
 import com.hobes.book_rental.pojo.book_transaction.book_rent.BookRentResponse;
 import com.hobes.book_rental.pojo.book_transaction.book_return.BookReturnRequest;
 import com.hobes.book_rental.pojo.book_transaction.book_return.BookReturnResponse;
-import com.hobes.book_rental.pojo.category.CategoryResponse;
 import com.hobes.book_rental.pojo.member.MemberResponse;
 import com.hobes.book_rental.repo.AuthorRepo;
 import com.hobes.book_rental.repo.BookRepo;
@@ -62,6 +58,23 @@ public class BookTransactionServiceImpl implements BookTransactionService {
 		return bookTransactionResponse;
 	}
 
+	
+	@Override
+	public List<BookTransactionResponse> getTransactionHistoryOfMember(Long id) {
+		Member member;
+		
+		try {
+			member = memberRepo.findById(id).get();
+		} catch (NoSuchElementException e) {
+			throw new DoesNotExistException(id.toString(), "bookId");
+		}
+		
+		return (bookTransactionRepo.findAllTransactionOfMember(member)).stream()
+				.map(e -> modelMapper.map(e, BookTransactionResponse.class)).collect(Collectors.toList()); 
+		
+		
+	}
+	
 	@Override
 	public BookRentResponse addBookTransaction(BookRentRequest bookRentRequest) throws DoesNotExistException {
 
@@ -209,4 +222,6 @@ public class BookTransactionServiceImpl implements BookTransactionService {
 		
 		
 	}
+
+	
 }

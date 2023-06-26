@@ -14,6 +14,8 @@ public interface BookTransactionService {
 	List<BookTransactionResponse> getAllBookTransactions();
 
 	BookTransactionResponse getSingleBookTransaction(Long id);
+	
+	List<BookTransactionResponse> getTransactionHistoryOfMember(Long id);
 
 	BookRentResponse addBookTransaction(BookRentRequest bookRentRequest) throws DoesNotExistException;
 	

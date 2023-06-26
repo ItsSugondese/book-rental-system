@@ -22,4 +22,7 @@ public class MemberRequest {
 	
 	@NotEmpty(message="{member.address}")
 	private String address;
+	
+	@NotEmpty(message = "{member.password}")
+	private String password;
 }
