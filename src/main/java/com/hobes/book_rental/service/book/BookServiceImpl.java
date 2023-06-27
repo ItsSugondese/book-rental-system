@@ -1,12 +1,21 @@
 package com.hobes.book_rental.service.book;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
+import org.apache.commons.io.IOUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.hobes.book_rental.exception.DoesNotExistException;
 import com.hobes.book_rental.model.Author;
 import com.hobes.book_rental.model.Book;
@@ -36,9 +45,11 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public List<BookResponse> getAllBooks() {
+	public List<BookResponse> getAllBooks() throws FileNotFoundException, IOException {
+
 		List<BookResponse> bookResponses = (bookRepo.findAll()).stream()
 				.map(e -> modelMapper.map(e, BookResponse.class)).collect(Collectors.toList());
+		
 
 		return bookResponses;
 	}
@@ -50,10 +61,18 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public BookResponse addBook(BookRequest bookRequest) throws DoesNotExistException {
+	public BookResponse addBook(String data, MultipartFile file) throws IllegalStateException, IOException {
 		Book book;
 		Category category;
 		List<Author> authors;
+		
+		if (file.getSize() == 0) {
+			throw new FileNotFoundException("File not found");
+		}
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.registerModule(new JavaTimeModule());
+		BookRequest bookRequest = objectMapper.readValue(data, BookRequest.class);
 
 		if (bookRequest.getId() != null)
 			book = bookRepo.findById(bookRequest.getId()).orElse(new Book());
@@ -68,6 +87,22 @@ public class BookServiceImpl implements BookService {
 				.orElseThrow(() -> new DoesNotExistException(aLong.toString(), "AuthorId")))
 				.collect(Collectors.toList());
 		
+		
+		
+		//images 
+		File fileSaveDir = new File("C:\\Users\\Admin\\Desktop\\testPic");
+		if (!fileSaveDir.exists()) {
+			fileSaveDir.mkdirs();
+		}
+
+		String imageDirectory = fileSaveDir + File.separator + getRegisterFileName(file, (bookRequest.getIsbn()).toString());
+			
+			
+		bookRequest.setPhoto(imageDirectory);
+		
+		
+		
+		
 
 		book = modelMapper.map(bookRequest, Book.class);
 
@@ -78,6 +113,10 @@ public class BookServiceImpl implements BookService {
 
 		BookResponse response = modelMapper.map(bookRepo.save(book), BookResponse.class);
 
+		//uploading file to the path
+		file.transferTo(new File(imageDirectory));
+		
+		
 		response.setCategory(modelMapper.map(category, CategoryResponse.class));
 
 		List<AuthorResponse> authorResponses = authors.stream().map(e -> modelMapper.map(e, AuthorResponse.class))
@@ -93,4 +132,10 @@ public class BookServiceImpl implements BookService {
 
 	}
 
+	
+	private String getRegisterFileName(MultipartFile part, String constantVar) {
+		String fileName = part.getOriginalFilename();
+		return constantVar + "-" + UUID.randomUUID() + fileName.substring(fileName.lastIndexOf("."), fileName.length());
+
+	}
 }

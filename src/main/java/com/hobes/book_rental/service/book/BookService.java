@@ -1,18 +1,20 @@
 package com.hobes.book_rental.service.book;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
-import com.hobes.book_rental.exception.DoesNotExistException;
-import com.hobes.book_rental.pojo.book.BookRequest;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.hobes.book_rental.pojo.book.BookResponse;
 
 public interface BookService {
 
-	List<BookResponse> getAllBooks();
+	List<BookResponse> getAllBooks() throws FileNotFoundException, IOException;
 
 	BookResponse getSingleBook(Long id);
 
-	BookResponse addBook(BookRequest bookRequest) throws DoesNotExistException;
+	BookResponse addBook(String data, MultipartFile file) throws IllegalStateException, IOException;
 	
 	void removeBook(Long id);
 		

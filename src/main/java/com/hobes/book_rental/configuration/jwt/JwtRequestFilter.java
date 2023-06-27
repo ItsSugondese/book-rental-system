@@ -39,7 +39,10 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 			new AntPathRequestMatcher("/authenticate"),
 	        new AntPathRequestMatcher("/addUser"),
 	        new AntPathRequestMatcher("/forgot"),
-	        new AntPathRequestMatcher("/reset")
+	        new AntPathRequestMatcher("/reset"),
+	        new AntPathRequestMatcher("/book"),
+	        new AntPathRequestMatcher("/book/test"),
+	        new AntPathRequestMatcher("/book/getTest")
 
 			);
 
